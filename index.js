@@ -1,3 +1,5 @@
+<!-- THANK YOU TO RHYMBIL.NETLIFY.APP for providing most of the code on this project. That code can be found at https://rhymbil.netlify.app/-->
+
 window.onload = function() {
     // Your web app's Firebase configuration
   var firebaseConfig = {
