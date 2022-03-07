@@ -1,4 +1,4 @@
-// THANK YOU TO RHYMBIL.NETLIFY.APP for providing most of the code on this project. That code can be found at https://rhymbil.netlify.app/
+//  THANK YOU TO RHYMBIL.NETLIFY.APP for providing most of the code on this project. That code can be found at https://rhymbil.netlify.app/
 
 window.onload = function() {
     // Your web app's Firebase configuration
@@ -119,33 +119,47 @@ window.onload = function() {
 
       var chat_input_send = document.createElement('button')
       chat_input_send.setAttribute('id', 'chat_input_send')
-      chat_input_send.setAttribute('disabled', true)
       chat_input_send.innerHTML = `<i class="far fa-paper-plane"></i>`
 
       var chat_input = document.createElement('input')
       chat_input.setAttribute('id', 'chat_input')
       chat_input.setAttribute('maxlength', 1000)
       chat_input.placeholder = `${localStorage.getItem('name')}. Say something...`
+      chat_input.addEventListener("keyup", function(event) {
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+                  parent.create_load('chat_content_container')
+                  parent.send_message(chat_input.value)
+                  chat_input.value = ''
+                  // Focus on the input there after
+                  chat_input.focus()
+                }
+              });
       chat_input.onkeyup  = function(){
         if(chat_input.value.length > 0){
           chat_input_send.removeAttribute('disabled')
           chat_input_send.classList.add('enabled')
+
           chat_input_send.onclick = function(){
-            chat_input_send.setAttribute('disabled', true)
-            chat_input_send.classList.remove('enabled')
             if(chat_input.value.length <= 0){
+              parent.create_load('chat_content_container')
+              parent.send_message(chat_input.value)
+              chat_input.value = ''
+              // Focus on the input there after
+              chat_input.focus()
               return
             }
-            parent.create_load('chat_content_container')
-            parent.send_message(chat_input.value)
-            chat_input.value = ''
-            // Focus on the input there after
-            chat_input.focus()
+
           }
         }else{
           chat_input_send.classList.remove('enabled')
         }
       }
+
+
+
+      
 
       var chat_logout_container = document.createElement('div')
       chat_logout_container.setAttribute('id', 'chat_logout_container')
